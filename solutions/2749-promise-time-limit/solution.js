@@ -6,22 +6,13 @@
 var timeLimit = function(fn, t) {
     
     return async function(...args) {
-        return new Promise((resolve,reject) => {
-            const timeid = setTimeout(() => {
-                reject("Time Limit Exceeded");
-            },t);
-
-            fn(...args)
-                .then((res) => {
-                    clearTimeout(timeid);
-                    resolve(res);   
-                })
-                .catch((res)=>{
-                    clearTimeout(timeid);
-                    reject(res);
-                });
-        });
-    };
+        return new Promise(function(resolve,reject){
+            setTimeout(function(){
+                reject("Time Limit Exceeded")
+            },t)
+            fn(...args).then(resolve).catch(reject)
+        })
+    }
 };
 
 /**
