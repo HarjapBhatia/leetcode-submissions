@@ -1,14 +1,8 @@
-class Solution(object):
-    def twoSum(self, nums, target):
-        """
-        :type nums: List[int]
-        :type target: int
-        :rtype: List[int]
-        """
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
         hm = {}
-        for i, num in enumerate(nums):
-            diff = target - num
+        for i in range(len(nums)):
+            diff = target - nums[i]
             if diff in hm:
                 return [hm[diff],i]
-            hm[num] = i
-
+            hm[nums[i]] = i
