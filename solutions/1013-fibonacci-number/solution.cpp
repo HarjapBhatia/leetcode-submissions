@@ -1,8 +1,14 @@
 class Solution {
 public:
     int fib(int n) {
-        if(n==0) return 0;
-        else if(n == 2 || n == 1) return 1;
-        else return fib(n-1) + fib(n-2); 
+        if(n<2) return n;
+        int prv1=0, prv=1;
+        int cur = 0;
+        for(int i=2; i<=n; i++){
+            cur = prv+prv1;
+            prv1 = prv;
+            prv = cur;
+        }
+        return cur;
     }
 };
