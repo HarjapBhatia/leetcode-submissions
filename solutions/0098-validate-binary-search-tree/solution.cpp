@@ -9,14 +9,16 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+typedef long long ll;
 class Solution {
 public:
-    bool check(TreeNode* root, long long l, long long h){
+    bool fn(TreeNode* root, ll mi, ll mx){
         if(!root) return true;
-        if(root->val <= l || root->val >= h) return false;
-        return check(root->left, l, root->val) && check(root->right, root->val, h);
+        if(root->val <=mi || root->val>=mx) return false;
+        return fn(root->left, mi, root->val) && fn(root->right, root->val, mx);
     }
     bool isValidBST(TreeNode* root) {
-        return check(root, LLONG_MIN, LLONG_MAX);
+        ll mi = LLONG_MIN, mx = LLONG_MAX;
+        return fn(root, mi, mx); 
     }
 };
