@@ -12,23 +12,17 @@ class Solution {
 public:
     ListNode* rotateRight(ListNode* head, int k) {
         if(!head || !head->next || k==0) return head;
-        ListNode* temp = head;
-        int size = 1;
-        while(temp->next != nullptr){
-            temp = temp->next;
-            size++;
-        }
-        temp->next = head; // making it circularr
-        k=k%size;
-        if(k==0){
-            temp->next=nullptr;
-            return head; 
-        } 
-        int n = size-k;
-        ListNode* temp2 = head;
-        for(int i=1;i<n;i++) temp2 = temp2->next;
-        ListNode* newHead = temp2->next;
-        temp2->next = nullptr;
-        return newHead;
+        int n=1;
+        ListNode* t=head;
+        while(t->next) {n++; t=t->next;}
+        k%=n;
+        if(k==0) return head;
+        t->next=head;
+        int cnt=1;
+        ListNode* u=head;
+        while(cnt < n-k) {u=u->next; cnt++;} 
+        ListNode* nh = u->next;
+        u->next=nullptr;
+        return nh;
     }
 };
