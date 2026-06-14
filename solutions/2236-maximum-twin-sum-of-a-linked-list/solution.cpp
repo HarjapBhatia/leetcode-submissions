@@ -10,21 +10,37 @@
  */
 class Solution {
 public:
-    int pairSum(ListNode* head) {
-        int ans = 0;
-        vector<int> v;
-        ListNode* t = head;
-        while(t->next){
-            v.push_back(t->val);
-            t=t->next;
+    ListNode* mid(ListNode* head){
+        ListNode* fas=head, *slo=head;
+        while(fas->next && fas->next->next){
+            fas=fas->next->next;
+            slo=slo->next;
         }
-        v.push_back(t->val);
-        // for(int x : v) cout << x << " ";
-        int l=0,r=v.size()-1;
-        while(l<=r){
-            if(l==r) ans = max(ans, v[l]);
-            else ans = max(ans, v[l]+v[r]);
-            l++; r--;
+        return slo;
+    }
+
+    ListNode* rev(ListNode* head){
+        ListNode* prev=nullptr, *cur=head, *nxt=nullptr;
+        while(cur){
+            nxt = cur->next;
+            cur->next = prev;
+            prev = cur;
+            cur = nxt;
+        }
+        return prev;
+    }
+
+    int pairSum(ListNode* head) {
+        ListNode* fhalf = mid(head);
+        ListNode* shalf = rev(fhalf->next);
+        fhalf->next = nullptr;
+        //spliting ll in two and reversing the second half
+        int ans = 0;
+        while(shalf){
+            // cout << head->val << " " << shalf->val << "\n";
+            ans = max(ans, head->val+shalf->val);
+            shalf=shalf->next; 
+            head=head->next;
         }
         return ans;
     }
