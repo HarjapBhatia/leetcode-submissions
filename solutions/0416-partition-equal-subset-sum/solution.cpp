@@ -19,12 +19,12 @@ public:
         tot /= 2;
         
         vector<vector<bool>> dp(n+1, vector<bool>(tot+1,false));
-        // for(int j=0;j<=tot;j++) dp[0][j]=0;
-        for(int i=0;i<=n;i++) dp[i][0]=false;
-        dp[0][0]=1;
+        dp[0][0]=true;
         for(int i=1;i<=n;i++){
             for(int j=1;j<=tot;j++){
-                if(j < nums[i-1]) dp[i][j] = dp[i-1][j];
+                // if the num is greater than sum we want, ignore it
+                if(nums[i-1] > j) dp[i][j] = dp[i-1][j];
+                // else leave it || take it
                 else{
                     dp[i][j] = dp[i-1][j] || dp[i-1][j-nums[i-1]];
                 }
