@@ -1,25 +1,27 @@
 class Solution {
 public:
+    bool is(vector<int> &w, int mi, int d){
+        int cnt=1, cur=0;
+        for(int i:w){
+            if(cur + i > mi){
+                cnt++; cur=i;
+            }else cur += i;
+        }
+        return cnt <= d;
+    }
+    
     int shipWithinDays(vector<int>& w, int days) {
-        int n = w.size();
-        int ans =0, sm =0;
-        for(int x : w) sm += x;
-        int l=*max_element(w.begin(), w.end()), r=sm;
+        int l=*max_element(w.begin(), w.end());
+        int r = accumulate(w.begin(), w.end(), 0);
+        int ans = r;            
         while(l<=r){
             int mi = l+(r-l)/2;
-
-            int cnt=1, tmp=0;
-            for(int i=0;i<w.size();i++){
-                if(tmp+w[i] <= mi){
-                    tmp += w[i];
-                }else{
-                    tmp=w[i]; cnt++;
-                }
+            if(is(w, mi, days)){
+                ans = mi;
+                r=mi-1; 
+            }else{
+                l=mi+1; 
             }
-
-            if(cnt <= days){
-                ans=mi; r=mi-1;
-            }else l=mi+1;
         }
         return ans;
     }
