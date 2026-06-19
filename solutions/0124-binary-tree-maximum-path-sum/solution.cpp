@@ -11,13 +11,13 @@
  */
 class Solution {
 public:
-    int ans = -6969696;
+    int ans = -3e7;
     int f(TreeNode* root){
         if(!root) return 0;
         int l = max(0, f(root->left));
         int r = max(0, f(root->right));
-        ans = max(ans, root->val + l + r);
-        return root->val + max(l,r);
+        ans = max(ans, root->val + l+r);
+        return root->val+max(l,r);
     }
 
     int maxPathSum(TreeNode* root) {
