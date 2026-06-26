@@ -1,18 +1,19 @@
 class Solution {
 public:
-    vector<vector<int>> subsets(vector<int>& nums) {
-        int n = nums.size();
-        vector<vector<int>>ans;
-        for(int i=0;i<(1<<n);i++){
-            vector<int> temp;
-            for(int j=0;j<n;j++){
-                // subset generation using bit masking
-                if((i>>j) & 1) {
-                    temp.push_back(nums[j]);
-                } 
-            }
-            ans.push_back(temp);
+    vector<vector<int>> res;
+    void f(vector<int> &v, int i, vector<int> &temp){
+        if(i == v.size()) {
+            res.push_back(temp); return;
         }
-        return ans;
+        temp.push_back(v[i]);
+        f(v, i+1, temp);
+        temp.pop_back();
+        f(v, i+1, temp);
+    }
+
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<int>temp; 
+        f(nums, 0, temp);
+        return res;
     }
 };
