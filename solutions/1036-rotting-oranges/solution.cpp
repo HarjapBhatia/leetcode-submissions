@@ -22,7 +22,7 @@ public:
                 int fi = q.front().first;
                 int fj = q.front().second; q.pop();
                 
-                if(g[fi][fj]==0) continue;
+                // if(g[fi][fj]==0) continue;
 
                 if(fi>0 && g[fi-1][fj]==1) {
                     g[fi-1][fj]=2; fresh--;
