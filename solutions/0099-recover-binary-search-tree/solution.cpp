@@ -1,0 +1,35 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+
+/*
+    validate the bst on every node,
+    mark those invalid ones (two of them exists)
+*/
+typedef long long ll;
+class Solution {
+public:
+    TreeNode* prev=nullptr, *a=nullptr, *b=nullptr;
+    void f(TreeNode* root){
+        if(!root) return;
+        f(root->left);
+        if(prev && prev->val > root->val){
+            if(!a) a = prev;
+            b = root;
+        }
+        prev = root;
+        f(root->right);
+    }
+    void recoverTree(TreeNode* root) {
+        f(root);
+        swap(a->val, b->val);
+    }
+};
