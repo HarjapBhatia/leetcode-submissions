@@ -10,30 +10,53 @@
  */
 class Solution {
 public:
-    ListNode* mergeKLists(vector<ListNode*>& lists) {
-        priority_queue<int, vector<int>, greater<int>> pq;
-        for(auto a : lists){
-            while(a){
-                pq.push(a->val);
-                a=a->next;
-            }
+    ListNode* merge(ListNode* l, ListNode* r){
+        if(!l) return r;
+        if(!r) return l;
+
+        if(l->val <= r->val){
+            l->next = merge(l->next, r);
+            return l;
+        }else{
+            r->next = merge(l, r->next);
+            return r;
         }
-        ListNode* ans=nullptr;
-        ListNode* t=nullptr;
-        while(!pq.empty()){
-            int x=pq.top(); pq.pop();
-            if(!ans) {
-                t = new ListNode(x); 
-                ans=t;
-            }
-            else{
-                ListNode* ln = new ListNode(x);
-                t->next = ln;
-                t=t->next;
-            } 
+    }
+
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+
+        int n=lists.size();
+        if(!n) return nullptr;
+        ListNode* ans = lists[0];
+        for(int i=1;i<n;i++){
+            ans = merge(ans, lists[i]);
         }
 
         return ans;
+
+        // priority_queue<int, vector<int>, greater<int>> pq;
+        // for(auto a : lists){
+        //     while(a){
+        //         pq.push(a->val);
+        //         a=a->next;
+        //     }
+        // }
+        // ListNode* ans=nullptr;
+        // ListNode* t=nullptr;
+        // while(!pq.empty()){
+        //     int x=pq.top(); pq.pop();
+        //     if(!ans) {
+        //         t = new ListNode(x); 
+        //         ans=t;
+        //     }
+        //     else{
+        //         ListNode* ln = new ListNode(x);
+        //         t->next = ln;
+        //         t=t->next;
+        //     } 
+        // }
+
+        // return ans;
 
         //approach 1
         // vector<int> vec;
